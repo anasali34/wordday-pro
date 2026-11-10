@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="ku" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta id="themeColorMeta" name="theme-color" content="#050d20">
+<title>WORKDAY PRO — Work • Track • Earn</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800;900&display=swap');
+:root{--bg:#050d20;--panel:#0c1930;--gold:#ffc629;--muted:#aab7ce;--stroke:#2a4168;--white:#f7f9ff}
+*{box-sizing:border-box}body{margin:0;color:var(--white);font-family:'Noto Sans Arabic',system-ui,sans-serif;background:radial-gradient(ellipse at 15% 0%,#102c5a 0,transparent 40%),var(--bg);min-height:100vh}
+.app{max-width:510px;margin:auto;min-height:100vh;padding:15px 14px 94px;position:relative}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#ffe78b,#b87908 60%,#fff0ae);color:#071327;font-size:27px}
+.brand b{display:block;font-size:17px}.brand small{color:var(--muted);font-size:10px;letter-spacing:1px}
+.iconbtn{width:40px;height:40px;border-radius:13px;border:1px solid var(--stroke);background:#101f38;color:white;font-size:20px}
+.screen{display:none}.screen.active{display:block}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:1.5px;font-weight:800}
+h1{font-size:23px;line-height:1.4;margin:5px 0 4px}h2{font-size:16px;margin:20px 0 10px}.muted{color:var(--muted);font-size:12px}
+.hero{border:1px solid #dcae35;border-radius:23px;padding:18px;background:linear-gradient(115deg,#ffce38,#a66b0b 52%,#142b27);color:#fff}
+.hero .label{font-size:12px}.hero .big{font-size:28px;font-weight:900;direction:ltr;text-align:right;margin-top:5px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.stat{border:1px solid var(--stroke);border-radius:18px;padding:14px;background:linear-gradient(145deg,#142b4b,#0b1930);min-height:105px}.stat small{display:block;color:var(--muted);font-size:11px;margin-top:7px}.stat strong{font-size:20px;display:block;margin-top:2px}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:21px 2px 10px}.sectionhead h2{margin:0}.link{color:var(--gold);font-size:11px;background:none;border:0}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.tile{border:1px solid var(--stroke);background:linear-gradient(145deg,#142744,#0a172b);border-radius:15px;padding:13px 5px;text-align:center;color:white;font:inherit;cursor:pointer}.tile span{font-size:23px;display:block;margin-bottom:5px}.tile small{font-size:10px}
+.panel{border:1px solid #dcae35;background:radial-gradient(circle at 50% 0%,#132646 0,#071226 70%);border-radius:23px;padding:20px;margin-top:13px}
+label{display:block;font-size:12px;color:#ffd76c;margin:12px 0 6px;font-weight:700}input,select{width:100%;border:1px solid #dca52b66;background:#050d1d;color:white;padding:13px 12px;border-radius:14px;font:inherit;font-size:14px;outline:none}
+input:focus,select:focus{border-color:var(--gold)}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:16px;padding:14px 16px;font:inherit;font-size:14px;font-weight:900;cursor:pointer}
+.goldbtn{background:linear-gradient(100deg,#b87908,#ffe17a,#d99a13);color:#1c1303;border:1px solid #ffe69b}.redbtn{background:#a92335;color:white}.full{width:100%;margin-top:15px}
+.tabs{display:flex;gap:7px;margin:12px 0}.tab{flex:1;padding:10px 4px;border:1px solid var(--stroke);border-radius:12px;background:#0b1930;color:#cbd5e7;font:inherit;font-size:11px}.tab.active{border-color:var(--gold);color:var(--gold)}
+.list{display:grid;gap:9px}.entry{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px;background:#0a172b;border:1px solid var(--stroke);border-radius:14px}.entry small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.money{direction:ltr;text-align:left;font-weight:800;color:var(--gold);font-size:13px;white-space:nowrap}.empty{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+.profile{display:flex;align-items:center;gap:12px;padding:15px;background:#12233d;border:1px solid var(--stroke);border-radius:17px}.avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(140deg,#ffe18a,#b77b14);display:grid;place-items:center;color:#16213a;font-size:23px}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(510px,100%);display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:#030b1cf5;border-top:1px solid #d2a33d;z-index:10}
+nav button{border:0;background:none;color:#9eacc2;font:inherit;font-size:10px;padding:5px 0;cursor:pointer}nav button span{display:block;font-size:20px}nav button.active{color:#ffcf39}
+.toast{position:fixed;bottom:83px;left:50%;transform:translateX(-50%);background:#ffe18a;color:#14213a;padding:10px 16px;border-radius:30px;font-weight:800;font-size:12px;display:none;z-index:20;white-space:nowrap}
+.auth-container{position:fixed;inset:0;background:radial-gradient(circle at 50% 20%,#17366a 0,#020714 70%);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.auth-box{width:100%;max-width:440px;background:linear-gradient(145deg,#0e1f3d,#050b18);border:1px solid #dca52b;border-radius:28px;padding:30px 24px;box-shadow:0 0 40px #ffc62933;text-align:center}
+.auth-logo{width:70px;height:70px;margin:0 auto 12px;border-radius:20px;background:linear-gradient(145deg,#ffe78b,#b87908 60%,#fff0ae);display:grid;place-items:center;font-size:34px;color:#071327}
+.auth-box h2{color:#ffdc70;font-size:22px;margin:5px 0}.auth-box p{color:#aab7ce;font-size:12px;margin-bottom:20px}.auth-switch{margin-top:16px;font-size:13px;color:#aab7ce}.auth-switch a{color:var(--gold);text-decoration:none;font-weight:800;cursor:pointer}.auth-subform{display:none}.auth-subform.active{display:block}
+.delete{border:1px solid #a94b56;background:#451725;color:#ffd8dc;border-radius:9px;padding:7px 9px;cursor:pointer}
+
+/* Light theme */
+body[data-theme="light"]{--bg:#f3f6fc;--panel:#ffffff;--muted:#58677d;--stroke:#cbd5e3;--white:#17243a;background:linear-gradient(145deg,#f8faff,#e8eef8);color:var(--white)}
+body[data-theme="light"] .panel{background:#fff;border-color:#d5b45d;box-shadow:0 5px 18px #1b355010}
+body[data-theme="light"] .stat,body[data-theme="light"] .tile{background:linear-gradient(145deg,#fff,#edf2fa);color:#17243a}
+body[data-theme="light"] .entry,body[data-theme="light"] .profile{background:#f4f7fc;color:#17243a}
+body[data-theme="light"] input,body[data-theme="light"] select{background:#fff;color:#17243a;border-color:#c8d3e2}
+body[data-theme="light"] nav{background:#ffffffed;border-top-color:#d2a33d}
+body[data-theme="light"] nav button{color:#58677d}
+body[data-theme="light"] nav button.active{color:#9a6900}
+body[data-theme="light"] .iconbtn{background:#fff;color:#17243a}
+body[data-theme="light"] .tabs .tab{background:#fff;color:#42516a}
+body[data-theme="light"] .tabs .tab.active{color:#8a5d00}
+body[data-theme="light"] .auth-box{background:#fff;color:#17243a}
+body[data-theme="light"] .auth-box p,body[data-theme="light"] .auth-switch{color:#58677d}
+body[data-theme="light"] .auth-container{background:linear-gradient(145deg,#e9eff9,#f8faff)}
+body[data-theme="light"] .delete{background:#fff0f1;color:#9d2535}
+.theme-options{display:grid;grid-template-columns:1fr 1fr;gap:9px}.theme-choice{padding:12px;border:1px solid var(--stroke);border-radius:13px;background:#10213b;color:var(--white);font:inherit;cursor:pointer}.theme-choice.active{border-color:var(--gold);color:var(--gold)}
+body[data-theme="light"] .theme-choice{background:#f4f7fc;color:#17243a}
+.cloud-status{padding:12px;border:1px solid var(--stroke);border-radius:13px;background:#0b1930;color:var(--muted);font-size:12px}
+body[data-theme="light"] .cloud-status{background:#f4f7fc;color:#58677d}
+@media(min-width:700px){.app{margin-top:20px;border:1px solid #a77b2b;border-radius:28px;min-height:calc(100vh - 40px)}nav{bottom:20px;border-radius:0 0 28px 28px}}
+</style>
+</head>
+<body>
+<div id="authOverlay" class="auth-container">
+ <div class="auth-box">
+  <div class="auth-logo">👑</div><b style="font-size:19px">WORKDAY <span style="color:var(--gold)">PRO</span></b><small style="display:block;color:var(--muted);font-size:10px;margin-bottom:15px">WORK • TRACK • EARN</small>
+  <div id="loginForm" class="auth-subform active"><h2>چوونەژوورەوە</h2><p>بە جیمەیل و پاسوۆرد بچۆ ژوورەوە</p><label>جیمەیل</label><input id="logUser" type="email" placeholder="example@gmail.com" dir="ltr"><label>وشەی نهێنی</label><input id="logPass" type="password" placeholder="••••••••"><button class="btn goldbtn full" onclick="handleLogin()">چوونەژوورەوە</button><div class="auth-switch">ئەکاونتت نییە؟ <a onclick="showAuth('register')">دروستکردن</a></div><div class="auth-switch"><a onclick="showAuth('forgot')">پاسوۆردت بیرچووە؟</a></div></div>
+  <div id="registerForm" class="auth-subform"><h2>دروستکردنی ئەکاونت</h2><p>زانیارییەکانت بنووسە</p><label>ناوی تەواو</label><input id="regName" placeholder="ناوت"><label>جیمەیل</label><input id="regEmail" type="email" placeholder="example@gmail.com" dir="ltr"><label>پاسوۆرد (لانیکەم ٦ پیت)</label><input id="regPass" type="password"><button class="btn goldbtn full" onclick="handleRegister()">دروستکردنی ئەکاونت</button><div class="auth-switch">ئەکاونتت هەیە؟ <a onclick="showAuth('login')">چوونەژوورەوە</a></div></div>
+  <div id="forgotForm" class="auth-subform"><h2>گۆڕینی پاسوۆرد</h2><p>ئەمە تەنها دیمەنی تاقیکردنەوەیە؛ لۆگینی ڕاستەقینە هێشتا بە Firebase نەبەستراوە.</p><button class="btn goldbtn full" onclick="showAuth('login')">گەڕانەوە</button></div>
+ </div>
+</div>
+<div class="app">
+<header><button class="iconbtn" onclick="go('updates')">♧</button><div class="brand"><div class="logo">♛</div><div><b>WORKDAY <span style="color:var(--gold)">PRO</span></b><small>WORK • TRACK • EARN</small></div></div><button class="iconbtn" onclick="go('profile')">☰</button></header>
+<section id="home" class="screen active"><div class="eyebrow">بەخێربێیتەوە</div><h1>سڵاو، <span id="helloName">Anas</span> 👑</h1><p class="muted">هەموو ڕۆژ و مووچەکەت لە یەک شوێن بەڕێوەببە.</p><div class="hero"><div class="label">پارەی ماوە</div><div class="big" id="heroTotal">0 IQD</div><div class="foot">✓ حیسابی ڕۆژەکانی کارت</div></div>
+<div class="stats"><div class="stat"><small>کۆی کاتژمێری کار</small><strong id="hours">0</strong><small>کاتژمێر</small></div><div class="stat"><small>ڕۆژەکانی کار</small><strong id="days">0</strong><small>ڕۆژ</small></div><div class="stat"><small>پارەی وەرگیراو</small><strong id="paid">0</strong><small>IQD</small></div><div class="stat"><small>پارەی ماوە</small><strong id="due">0</strong><small>IQD</small></div></div>
+<div class="sectionhead"><h2>بەشی خێرا</h2></div><div class="tiles"><button class="tile" data-go="work"><span>📅</span><small>تۆمارکردنی کار</small></button><button class="tile" data-go="payment"><span>👛</span><small>وەرگرتنی پارە</small></button><button class="tile" data-go="reports"><span>📊</span><small>ڕاپۆرت</small></button><button class="tile" data-go="history"><span>🕘</span><small>مێژوو</small></button><button class="tile" data-go="profile"><span>⚙️</span><small>ڕێکخستن</small></button><button class="tile" data-go="updates"><span>🔔</span><small>نوێکاری</small></button></div>
+<div class="sectionhead"><h2>دوایین ڕۆژەکان</h2></div><div class="list" id="recent"></div></section>
+<section id="work" class="screen"><div class="eyebrow">WORK RECORD</div><h1>تۆمارکردنی ڕۆژی کار</h1><div class="panel"><label>بەرواری کار</label><input id="workDate" type="date"><div class="row"><div><label>مووچەی ڕۆژانە</label><input id="wage" type="number" min="0" placeholder="50000"></div><div><label>دراو</label><select id="workCurrency"><option>IQD</option><option>USD</option></select></div></div><div class="row"><div><label>کاتژمێری کار</label><input id="workHours" type="number" min="0" max="24" step=".5" placeholder="8"></div><div><label>تێبینی</label><input id="workNote" placeholder="شوێنی کار"></div></div><button class="btn goldbtn full" id="saveWork">✓ تۆمارکردنی ڕۆژ</button></div><div class="panel"><div class="list" id="workList"></div></div></section>
+<section id="payment" class="screen"><div class="eyebrow">PAYMENT RECORD</div><h1>وەرگرتنی پارە</h1><div class="panel"><label>بەرواری وەرگرتنی پارە</label><input id="payDate" type="date"><div class="row"><div><label>بڕی پارە</label><input id="payAmount" type="number" min="0" placeholder="250000"></div><div><label>دراو</label><select id="payCurrency"><option>IQD</option><option>USD</option></select></div></div><label>تێبینی</label><input id="payNote" placeholder="پارەی مووچە"><button class="btn goldbtn full" id="savePay">✓ تۆمارکردنی پارە</button></div><div class="panel"><div class="list" id="payList"></div></div></section>
+<section id="history" class="screen"><div class="eyebrow">WORK HISTORY</div><h1>مێژووی کارکردن</h1><div class="tabs"><button class="tab active" data-filter="all">هەموو</button><button class="tab" data-filter="work">ڕۆژانی کار</button><button class="tab" data-filter="pay">پارەدان</button></div><div class="panel"><div class="list" id="historyList"></div></div></section>
+<section id="reports" class="screen"><div class="eyebrow">REPORTS & ACCOUNTS</div><h1>ڕاپۆرت و حیساب</h1><div class="panel"><div id="reportContent"></div></div><div class="panel"><h2>پاراستنی داتا</h2><p class="muted">هەناردەیەک لە داتاکانت هەڵبگرە.</p><button class="btn goldbtn full" id="backup">⬇ هەناردەکردنی داتا</button></div><div class="panel"><h2>☁️ پاشەکەوتی کلاود</h2><p class="muted">داتاکانت لە Firebase هەڵدەگیرێن. بۆ چالاککردنی، پێویستە زانیارییەکانی پڕۆژەی Firebase زیاد بکرێت.</p><div class="cloud-status" id="cloudStatus">چالاک نەکراوە — Firebase پێویستە</div><button class="btn goldbtn full" id="cloudBackup">☁️ پاشەکەوتکردنی ئۆنلاین</button><p class="muted">تێبینی: لۆگینی ئەم وەشانە دیمۆیە؛ بۆ هاوکاتکردنی نێوان چەند ئامێرێک، دەبێت Authentication ـی ڕاستەقینە چالاک بکرێت.</p></div></section>
+<section id="profile" class="screen"><div class="eyebrow">SETTINGS</div><h1>ڕێکخستن</h1><div class="profile"><div class="avatar">👑</div><b id="profileName">Anas</b></div><div class="panel"><label>ناوی بەکارهێنەر</label><input id="userName"><label>دراوی بنەڕەتی</label><select id="defaultCurrency"><option>IQD</option><option>USD</option></select><button class="btn goldbtn full" id="saveProfile">پاشەکەوتکردنی ڕێکخستن</button></div><div class="panel"><h2>🎨 ڕووکار</h2><p class="muted">دۆخی تاریک یان ڕوون هەڵبژێرە.</p><div class="theme-options"><button class="theme-choice" id="darkTheme" onclick="setTheme('dark')">🌙 تاریک</button><button class="theme-choice" id="lightTheme" onclick="setTheme('light')">☀️ ڕوون</button></div></div><div class="panel"><button class="btn goldbtn full" onclick="go('about')">ⓘ دەربارەی ئەپ</button></div><div class="panel"><button class="btn redbtn full" onclick="handleLogout()">🚪 دەرچوون لە هەژمار</button><p class="muted">وەشان 1.0 PRO · dev . an4s065</p></div></section>
+<section id="about" class="screen"><div class="eyebrow">ABOUT THE APP</div><h1>دەربارەی WORKDAY PRO</h1><div class="panel"><div style="font-size:35px">👑</div><h2>WORKDAY PRO</h2><p id="aboutDesc" class="muted">WORKDAY PRO بۆ ڕێکخستنی ڕۆژەکانی کار، تۆمارکردنی مووچە و پارەی وەرگیراو دروست کراوە.</p><div class="tabs"><button class="tab active" onclick="setAboutLang('ku',this)">کوردی</button><button class="tab" onclick="setAboutLang('ar',this)">العربية</button><button class="tab" onclick="setAboutLang('en',this)">English</button></div><hr style="border-color:var(--stroke);opacity:.6"><p id="aboutContact" class="muted">بۆ دروستکردنی ئەپ، سیستەم و وێبسایتەکانتان، پەیوەندیمان پێوە بکەن.</p><div class="entry"><b>📞 +964 771 155 1534</b></div><a id="aboutWhatsapp" class="btn goldbtn full" style="display:block;text-align:center;text-decoration:none" href="https://wa.me/9647711551534" target="_blank" rel="noopener">🟢 پەیوەندی لە WhatsApp</a></div><div class="panel"><p class="muted">Version 1.0 PRO · dev . an4s065</p></div></section><section id="updates" class="screen"><div class="eyebrow">WHAT'S NEW</div><h1>نوێکارییەکان</h1><div class="panel"><div style="font-size:35px">🔔</div><h2>سیستەمی نوێکردنەوە</h2><p class="muted">ئەم بەشە لە وەشانی ئۆنلاین دەتوانێت نوێکاری پیشان بدات.</p></div></section>
+<nav><button class="active" data-go="home"><span>⌂</span>سەرەکی</button><button data-go="reports"><span>▥</span>ڕاپۆرت</button><button data-go="history"><span>▣</span>مێژوو</button><button data-go="profile"><span>⚙</span>ڕێکخستن</button></nav>
+</div><div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id),today=new Date().toISOString().slice(0,10);
+let works=JSON.parse(localStorage.getItem('wdp_works')||'[]'),payments=JSON.parse(localStorage.getItem('wdp_payments')||'[]'),profile=JSON.parse(localStorage.getItem('wdp_profile')||'{"name":"Anas","currency":"IQD"}');
+$('workDate').value=today;$('payDate').value=today;$('userName').value=profile.name;
+setTheme(localStorage.getItem('wdp_theme')||'dark');
+$('cloudBackup').onclick=cloudBackup;
+if(localStorage.getItem('wdp_logged_in'))$('authOverlay').style.display='none';
+function showAuth(name){document.querySelectorAll('.auth-subform').forEach(x=>x.classList.remove('active'));$(name+'Form').classList.add('active')}
+function handleLogin(){let u=$('logUser').value.trim(),p=$('logPass').value;if(!u||!p)return toast('جیمەیل و پاسوۆرد پڕبکەرەوە');localStorage.setItem('wdp_logged_in','demo');$('authOverlay').style.display='none';toast('چوونەژوورەوەی تاقیکردنەوە سەرکەوتوو بوو')}
+function handleRegister(){let n=$('regName').value.trim(),e=$('regEmail').value.trim(),p=$('regPass').value;if(!n||!e||p.length<6)return toast('ناو، جیمەیل و پاسوۆردی ٦ پیت پڕبکەرەوە');profile.name=n;localStorage.setItem('wdp_profile',JSON.stringify(profile));localStorage.setItem('wdp_logged_in','demo');$('authOverlay').style.display='none';$('userName').value=n;render();toast('ئەکاونتی تاقیکردنەوە دروستکرا')}
+function handleLogout(){if(confirm('دڵنیایت لە دەرچوون؟')){localStorage.removeItem('wdp_logged_in');$('authOverlay').style.display='flex';showAuth('login')}}
+function toast(s){$('toast').textContent=s;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',2200)}
+function setTheme(theme){document.body.dataset.theme=theme;localStorage.setItem('wdp_theme',theme);$('darkTheme').classList.toggle('active',theme==='dark');$('lightTheme').classList.toggle('active',theme==='light');$('themeColorMeta').content=theme==='light'?'#f3f6fc':'#050d20'}
+const aboutText={ku:{desc:'WORKDAY PRO بۆ ڕێکخستنی ڕۆژەکانی کار، تۆمارکردنی مووچە، پارەی وەرگیراو و بەدواداچوونی حساباتەکانت دروست کراوە.',contact:'بۆ دروستکردنی ئەپ، سیستەم و وێبسایتەکانتان، پەیوەندیمان پێوە بکەن.',button:'🟢 پەیوەندی لە WhatsApp'},ar:{desc:'تم إنشاء تطبيق WORKDAY PRO لتنظيم أيام العمل وتسجيل الأجور والمدفوعات المستلمة ومتابعة حساباتك.',contact:'لإنشاء التطبيقات والأنظمة والمواقع الإلكترونية، يرجى التواصل معنا.',button:'🟢 تواصل عبر WhatsApp'},en:{desc:'WORKDAY PRO is designed to organize workdays, record wages and payments received, and keep track of your balances.',contact:'For app, system, and website development, please contact us.',button:'🟢 Contact us on WhatsApp'}};
+function setAboutLang(lang,btn){$('aboutDesc').textContent=aboutText[lang].desc;$('aboutContact').textContent=aboutText[lang].contact;document.querySelectorAll('#about .tab').forEach(x=>x.classList.toggle('active',x===btn));$('about').dir=lang==='en'?'ltr':'rtl';$('aboutWhatsapp').textContent=aboutText[lang].button}
+function cloudBackup(){toast('بۆ چالاککردنی پاشەکەوتی کلاود، Firebase config پێویستە')}
+
+const fmt=(n,c)=>new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(n)+' '+c;
+const sum=(arr,c)=>arr.filter(x=>x.currency===c).reduce((a,x)=>a+x.amount,0);
+function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function entry(x,type,index){return `<div class="entry"><div><b>${safe(x.date)}</b><small>${type==='work'?'ڕۆژی کار':'پارەی وەرگیراو'}${x.hours?' · '+x.hours+' کاتژمێر':''}${x.note?' · '+safe(x.note):''}</small></div><div style="display:flex;align-items:center;gap:8px"><div class="money">${fmt(x.amount,x.currency)}</div><button class="delete" onclick="${type==='work'?'deleteWork':'deletePayment'}(${index})">🗑</button></div></div>`}
+function deleteWork(i){if(confirm('ئەم ڕۆژە بسڕدرێتەوە؟')){works.splice(i,1);persist();toast('ڕۆژی کار سڕایەوە')}}
+function deletePayment(i){if(confirm('ئەم پارەیە بسڕدرێتەوە؟')){payments.splice(i,1);persist();toast('پارەکە سڕایەوە')}}
+function persist(){localStorage.setItem('wdp_works',JSON.stringify(works));localStorage.setItem('wdp_payments',JSON.stringify(payments));render();if(typeof window.persist==='function')window.persist()}
+function render(){
+ const c=profile.currency||'IQD',earned=sum(works,c),paid=sum(payments,c);
+ $('helloName').textContent=profile.name;$('profileName').textContent=profile.name;$('userName').value=profile.name;
+ $('heroTotal').textContent=fmt(earned-paid,c);$('days').textContent=works.length;$('hours').textContent=works.reduce((s,x)=>s+(x.hours||0),0);$('paid').textContent=new Intl.NumberFormat('en-US').format(paid);$('due').textContent=new Intl.NumberFormat('en-US').format(earned-paid);
+ const sorted=works.map((x,i)=>({...x,i})).sort((a,b)=>b.date.localeCompare(a.date));
+ $('recent').innerHTML=sorted.length?sorted.slice(0,3).map(x=>entry(x,'work',x.i)).join(''):'<div class="empty">هێشتا ڕۆژێک تۆمار نەکراوە</div>';
+ $('workList').innerHTML=sorted.length?sorted.map(x=>entry(x,'work',x.i)).join(''):'<div class="empty">هیچ تۆمارێک نییە</div>';
+ const pays=payments.map((x,i)=>({...x,i})).sort((a,b)=>b.date.localeCompare(a.date));
+ $('payList').innerHTML=pays.length?pays.map(x=>entry(x,'pay',x.i)).join(''):'<div class="empty">هیچ پارەدانێک نییە</div>';
+ const currencies=[...new Set([...works,...payments].map(x=>x.currency))];if(!currencies.length)currencies.push(c);
+ $('reportContent').innerHTML=currencies.map(cur=>`<div class="entry"><div>کۆی مووچە <small>${cur}</small></div><div class="money">${fmt(sum(works,cur),cur)}</div></div><div class="entry"><div>پارەی وەرگیراو</div><div class="money">${fmt(sum(payments,cur),cur)}</div></div><div class="entry"><div>پارەی ماوە</div><div class="money">${fmt(sum(works,cur)-sum(payments,cur),cur)}</div></div>`).join('<br>');
+ historyRender('all');
+}
+function historyRender(f){let a=[];if(f!=='pay')a.push(...works.map((x,i)=>({...x,type:'work',i})));if(f!=='work')a.push(...payments.map((x,i)=>({...x,type:'pay',i})));a.sort((x,y)=>y.date.localeCompare(x.date));$('historyList').innerHTML=a.length?a.map(x=>entry(x,x.type,x.i)).join(''):'<div class="empty">هیچ تۆمارێک نییە</div>'}
+function go(id){document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.go===id));window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+$('saveWork').onclick=()=>{let amount=Number($('wage').value),date=$('workDate').value;if(!date||amount<=0)return toast('بەروار و مووچە بنووسە');works.push({date,amount,currency:$('workCurrency').value,hours:Number($('workHours').value)||0,note:$('workNote').value});$('wage').value='';$('workHours').value='';$('workNote').value='';persist();toast('ڕۆژی کارت تۆمار کرا');go('home')};
+$('savePay').onclick=()=>{let amount=Number($('payAmount').value),date=$('payDate').value;if(!date||amount<=0)return toast('بەروار و بڕی پارە بنووسە');payments.push({date,amount,currency:$('payCurrency').value,note:$('payNote').value});$('payAmount').value='';$('payNote').value='';persist();toast('پارەدان تۆمار کرا');go('home')};
+document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));historyRender(b.dataset.filter)});
+$('saveProfile').onclick=()=>{profile={name:$('userName').value.trim()||'Anas',currency:$('defaultCurrency').value};localStorage.setItem('wdp_profile',JSON.stringify(profile));render();toast('ڕێکخستن پاشەکەوت کرا')};
+$('backup').onclick=()=>{let blob=new Blob([JSON.stringify({works,payments,profile},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='workday-pro-backup.json';a.click();URL.revokeObjectURL(a.href)};
+render();
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
+  signInWithEmailAndPassword, sendPasswordResetEmail, signOut,
+  updateProfile
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+import {
+  getFirestore, doc, getDoc, setDoc, onSnapshot, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAtAQ6mJXFsSzNdBNgfYa2VvBSz0ibCmgM",
+  authDomain: "wordk-day-pro.firebaseapp.com",
+  projectId: "wordk-day-pro",
+  storageBucket: "wordk-day-pro.firebasestorage.app",
+  messagingSenderId: "913739945789",
+  appId: "1:913739945789:web:e13431773237cc57a19754",
+  measurementId: "G-33DY3V3KE6"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
+let currentUser = null;
+let stopDataListener = null;
+let isLoadingAccount = false;
+
+const userDataRef = () => doc(db, "users", currentUser.uid, "appData", "main");
+
+function authMessage(error) {
+  const code = error?.code || "";
+  const messages = {
+    "auth/invalid-email": "ئیمەیڵەکە دروست نییە",
+    "auth/user-not-found": "ئەم هەژمارە بوونی نییە",
+    "auth/wrong-password": "وشەی نهێنی هەڵەیە",
+    "auth/invalid-credential": "ئیمەیڵ یان وشەی نهێنی هەڵەیە",
+    "auth/email-already-in-use": "ئەم ئیمەیڵە پێشتر بەکارهاتووە",
+    "auth/weak-password": "وشەی نهێنی دەبێت لانیکەم ٦ پیت بێت",
+    "auth/network-request-failed": "پەیوەندی ئینتەرنێت پچڕاوە",
+    "auth/too-many-requests": "هەوڵی زۆر دراوە؛ تکایە دواتر هەوڵ بدەوە",
+    "permission-denied": "مۆڵەتی Firestore ڕێگە بە نووسین نادات؛ دەبێت Rules ڕێکبخرێت"
+  };
+  return messages[code] || (error?.message || "هەڵەیەک ڕوویدا؛ تکایە دووبارە هەوڵ بدەوە");
+}
+
+window.handleLogin = async function () {
+  const email = $("logUser").value.trim();
+  const password = $("logPass").value;
+  if (!email || !password) return toast("جیمەیل و وشەی نهێنی پڕبکەرەوە");
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (e) { toast(authMessage(e)); }
+};
+
+window.handleRegister = async function () {
+  const name = $("regName").value.trim();
+  const email = $("regEmail").value.trim();
+  const password = $("regPass").value;
+  if (!name || !email || password.length < 6)
+    return toast("ناو، جیمەیل و وشەی نهێنیی ٦ پیت یان زیاتر پڕبکەرەوە");
+  try {
+    const credential = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(credential.user, { displayName: name });
+    profile = { name, currency: "IQD" };
+    works = [];
+    payments = [];
+    await setDoc(doc(db, "users", credential.user.uid, "appData", "main"), {
+      works, payments, profile, createdAt: serverTimestamp(), updatedAt: serverTimestamp()
+    });
+    toast("هەژمارەکەت بە سەرکەوتوویی دروستکرا");
+  } catch (e) { toast(authMessage(e)); }
+};
+
+window.handleLogout = async function () {
+  if (!confirm("دڵنیایت لە دەرچوون؟")) return;
+  try { await signOut(auth); }
+  catch (e) { toast(authMessage(e)); }
+};
+
+window.showAuth = function (name) {
+  document.querySelectorAll(".auth-subform").forEach(x => x.classList.remove("active"));
+  const form = $(name + "Form");
+  if (form) form.classList.add("active");
+  if (name === "forgot") {
+    const p = $("forgotForm").querySelector("p");
+    if (p) p.textContent = "ئیمەیڵەکەت بنووسە تا لینکی گۆڕینی وشەی نهێنیت بۆ بنێرین.";
+    let emailInput = $("forgotEmail");
+    if (!emailInput) {
+      emailInput = document.createElement("input");
+      emailInput.id = "forgotEmail";
+      emailInput.type = "email";
+      emailInput.placeholder = "example@gmail.com";
+      emailInput.dir = "ltr";
+      $("forgotForm").insertBefore(emailInput, $("forgotForm").querySelector("button"));
+      const label = document.createElement("label");
+      label.textContent = "جیمەیل";
+      $("forgotForm").insertBefore(label, emailInput);
+    }
+    const btn = $("forgotForm").querySelector("button");
+    btn.textContent = "ناردنی لینکی گۆڕینی وشەی نهێنی";
+    btn.onclick = window.handleForgotPassword;
+  }
+};
+
+window.handleForgotPassword = async function () {
+  const email = $("forgotEmail")?.value.trim();
+  if (!email) return toast("تکایە جیمەیلەکەت بنووسە");
+  try {
+    await sendPasswordResetEmail(auth, email);
+    toast("لینکی گۆڕینی وشەی نهێنی بۆ ئیمەیڵەکەت نێردرا");
+    window.showAuth("login");
+  } catch (e) { toast(authMessage(e)); }
+};
+
+window.persist = async function () {
+  render();
+  if (!currentUser) return;
+  try {
+    await setDoc(userDataRef(), {
+      works, payments, profile, updatedAt: serverTimestamp()
+    }, { merge: true });
+  } catch (e) {
+    toast(authMessage(e));
+  }
+};
+
+window.deleteWork = function (i) {
+  if (confirm("ئەم ڕۆژە بسڕدرێتەوە؟")) {
+    works.splice(i, 1);
+    window.persist();
+    toast("ڕۆژی کار سڕایەوە");
+  }
+};
+window.deletePayment = function (i) {
+  if (confirm("ئەم پارەیە بسڕدرێتەوە؟")) {
+    payments.splice(i, 1);
+    window.persist();
+    toast("پارەکە سڕایەوە");
+  }
+};
+
+$("saveProfile").onclick = () => {
+  profile = {
+    name: $("userName").value.trim() || currentUser?.displayName || "WORKDAY PRO",
+    currency: $("defaultCurrency").value
+  };
+  window.persist();
+  toast("ڕێکخستن پاشەکەوت کرا");
+};
+
+window.cloudBackup = async function () {
+  if (!currentUser) return toast("سەرەتا بچۆ ژوورەوە");
+  try {
+    const snap = await getDoc(userDataRef());
+    const data = snap.exists() ? snap.data() : { works, payments, profile };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "workday-pro-cloud-backup.json";
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast("پاشەکەوتی کلاود دابەزێنرا");
+  } catch (e) { toast(authMessage(e)); }
+};
+$("cloudBackup").onclick = window.cloudBackup;
+
+onAuthStateChanged(auth, async (user) => {
+  if (stopDataListener) { stopDataListener(); stopDataListener = null; }
+  currentUser = user || null;
+
+  if (!user) {
+    localStorage.removeItem('wdp_logged_in');
+    isLoadingAccount = false;
+    works = [];
+    payments = [];
+    profile = { name: "WORKDAY PRO", currency: "IQD" };
+    $("authOverlay").style.display = "flex";
+    window.showAuth("login");
+    render();
+    return;
+  }
+
+  isLoadingAccount = true;
+  $("authOverlay").style.display = "none";
+  toast("زانیارییەکانت بار دەکرێن...");
+  try {
+    const ref = userDataRef();
+    const first = await getDoc(ref);
+    if (!first.exists()) {
+      profile = { name: user.displayName || user.email?.split("@")[0] || "WORKDAY PRO", currency: "IQD" };
+      works = [];
+      payments = [];
+      await setDoc(ref, { works, payments, profile, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+    } else {
+      const data = first.data();
+      works = Array.isArray(data.works) ? data.works : [];
+      payments = Array.isArray(data.payments) ? data.payments : [];
+      profile = data.profile || { name: user.displayName || "WORKDAY PRO", currency: "IQD" };
+    }
+    $("userName").value = profile.name || "";
+    stopDataListener = onSnapshot(ref, (snap) => {
+      if (!snap.exists()) return;
+      const data = snap.data();
+      works = Array.isArray(data.works) ? data.works : [];
+      payments = Array.isArray(data.payments) ? data.payments : [];
+      profile = data.profile || profile;
+      render();
+    }, (e) => toast(authMessage(e)));
+    render();
+  } catch (e) {
+    toast(authMessage(e));
+  } finally {
+    isLoadingAccount = false;
+  }
+});
+</script>
+
+</body></html>
